@@ -1,0 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&family=Fuzzy+Bubbles&family=Gothic+A1:wght@100&family=IBM+Plex+Mono&family=Itim&family=Mukta&family=Nunito+Sans:wght@200&family=Redressed&family=Roboto:wght@100&family=Source+Sans+Pro:ital,wght@1,600&display=swap');
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+    font-family: 'Itim', cursive;
+}
