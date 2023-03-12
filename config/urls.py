@@ -21,6 +21,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/user/',include('account_api.urls')),
+    path('api/academy/',include('serov_academy_api.urls'))
 ]
 
 if settings.DEBUG:
