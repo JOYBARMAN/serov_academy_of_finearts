@@ -5,12 +5,12 @@ import {FaTwitter,FaFacebook,FaLinkedinIn,FaInstagram} from 'react-icons/fa'
 const Footer = () => {
     return (
         <>
-            <div style={{ backgroundColor: "black" }}>
+            <div style={{ backgroundColor: "rgb(0 0 0 / 82%)" }}>
                 <Container style={{ color: "white" }}>
                     <Row>
                         <Col lg="3" md="6" className='my-lg-5 my-2'>
                             <h3>Serov Academy</h3>
-                            <p className='text-muted'>A108 Adam Street<br />New York, NY 535022<br />United States</p>
+                            <p className=''>A108 Adam Street<br />New York, NY 535022<br />United States</p>
                             <p className='mt-2 '>Phone: +1 5589 55488 55<br />Email: info@example.com</p>
                         </Col>
                         <Col lg="3" md="6" className='my-lg-5 my-2'>

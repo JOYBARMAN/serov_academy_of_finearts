@@ -31,17 +31,17 @@ const NavBar = () => {
                     </Navbar.Brand>
                 </Container>
             </Navbar>
-            <Navbar sticky="top" style={{ "backgroundColor": "black" }} variant="dark" expand="lg">
+            <Navbar sticky="top" style={{ "backgroundColor": "rgb(0 0 0 / 82%)" }} variant="dark" expand="lg">
                 <Container>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto">
                             <Nav.Link href="/" className='text-white'>Home</Nav.Link>
+                            <Nav.Link href="/about" className='text-white '>About</Nav.Link>
                             <Nav.Link href="/course" className='text-white '>Course</Nav.Link>
-                            <Nav.Link href="#home" className='text-white '>Product</Nav.Link>
-                            <Nav.Link href="#home" className='text-white '>Gallery</Nav.Link>
-                            <Nav.Link href="#features" className='text-white '>Blog</Nav.Link>
-                            <Nav.Link href="#pricing" className='text-white '>Contact</Nav.Link>
+                            <Nav.Link href="/product" className='text-white '>Product</Nav.Link>
+                            <Nav.Link href="/blog" className='text-white '>Blog</Nav.Link>
+                            <Nav.Link href="/contact" className='text-white '>Contact</Nav.Link>
                         </Nav>
                         <div className='d-lg-flex'>
                             <Form className="d-flex">
@@ -55,17 +55,13 @@ const NavBar = () => {
                                 <Button style={{ "backgroundColor": "white", "color": "black", "border": "1px solid white", "borderTopLeftRadius": "0px", "borderBottomLeftRadius": "0px" }}><FaSearch /></Button>
                             </Form>
                             {access_token ?
-                                // <Nav.Link onClick={handleLogout} className='text-white ms-lg-3 mt-2 '>Log Out</Nav.Link> :
-                                <Nav.Link href='/dashboard' className='text-white ms-lg-3 mt-2 '>Dashboard</Nav.Link> :
+                                <Nav.Link onClick={handleLogout} className='text-white ms-lg-3 mt-2 '>Log Out</Nav.Link> :
+                                // <Nav.Link href='/dashboard' className='text-white ms-lg-3 mt-2 '>Dashboard</Nav.Link> :
                                 <div className='d-flex ms-lg-3'>
-                                    <Nav.Link href="/login" className='text-white mt-1' style={{ "backgroundColor": "black", "border": "1px solid black", "fontSize": 16 }}><FaUserAlt /><span className=' ms-2 '>Login</span></Nav.Link>
+                                    <Nav.Link href="/login" className='text-white mt-1' style={{ "fontSize": 16 }}><FaUserAlt /><span className=' ms-2 '>Login</span></Nav.Link>
                                 </div>
                             }
-
-
                         </div>
-
-
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
