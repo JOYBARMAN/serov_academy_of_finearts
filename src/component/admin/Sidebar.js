@@ -1,73 +1,49 @@
 import React, { useState } from 'react';
-import {
-    FaTh,
-    FaBars,
-    FaUserAlt,
-    FaRegChartBar,
-    FaCommentAlt,
-    FaShoppingBag,
-    FaThList
-}from "react-icons/fa";
-import { NavLink } from 'react-router-dom';
-import './Sidebar.css'
+import { ListGroup, Button, Offcanvas } from 'react-bootstrap';
+import { FaBars } from 'react-icons/fa'
+import NavDropdown from 'react-bootstrap/NavDropdown';
+const SideBar = () => {
+    const [show, setShow] = useState(false);
 
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
-const Sidebar = ({children}) => {
-    const[isOpen ,setIsOpen] = useState(true);
-    const toggle = () => setIsOpen (!isOpen);
-    const menuItem=[
-        {
-            path:"/",
-            name:"Dashboard",
-            icon:<FaTh/>
-        },
-        {
-            path:"/about",
-            name:"About",
-            icon:<FaUserAlt/>
-        },
-        {
-            path:"/analytics",
-            name:"Analytics",
-            icon:<FaRegChartBar/>
-        },
-        {
-            path:"/comment",
-            name:"Comment",
-            icon:<FaCommentAlt/>
-        },
-        {
-            path:"/product",
-            name:"Product",
-            icon:<FaShoppingBag/>
-        },
-        {
-            path:"/productList",
-            name:"Product List",
-            icon:<FaThList/>
-        }
-    ]
     return (
-        <div className="">
-           <div style={{width: isOpen ? "200px" : "50px"}} className="sidebar">
-               <div className="top_section">
-                   <h1 style={{display: isOpen ? "block" : "none"}} className="logo">Logo</h1>
-                   <div style={{marginLeft: isOpen ? "50px" : "0px"}} className="bars">
-                       <FaBars onClick={toggle}/>
-                   </div>
-               </div>
-               {
-                   menuItem.map((item, index)=>(
-                       <NavLink to={item.path} key={index} className="link" activeclassName="active">
-                           <div className="icon">{item.icon}</div>
-                           <div style={{display: isOpen ? "block" : "none"}} className="link_text">{item.name}</div>
-                       </NavLink>
-                   ))
-               }
-           </div>
-           <main>{children}</main>
-        </div>
-    );
-};
+        <>
+            <Button style={{ color: "red", backgroundColor: "white", border: "1px solid white", fontSize: "xx-large" }} onClick={handleShow}>
+                <FaBars />
+            </Button>
 
-export default Sidebar;
+            <Offcanvas show={show} onHide={handleClose}>
+                <Offcanvas.Header closeButton>
+                    <Offcanvas.Title>Serove Academy of Finearts</Offcanvas.Title>
+                </Offcanvas.Header>
+                <Offcanvas.Body style={{ padding: "0px", marginTop: "35px" }}>
+                    <ListGroup defaultActiveKey="#link1">
+                        <ListGroup.Item className='' >
+                            <NavDropdown title="Student" id="basic-nav-dropdown">
+                                <NavDropdown.Item href="/admin/addstudent">Add Student</NavDropdown.Item>
+                                <NavDropdown.Item href="#">
+                                    Student List
+                                </NavDropdown.Item>
+                            </NavDropdown>
+                        </ListGroup.Item>
+                        {/* <ListGroup.Item action href="/write">
+                            Write Article
+                        </ListGroup.Item> */}
+                        <ListGroup.Item className='' >
+                            <NavDropdown title="Section" id="basic-nav-dropdown">
+                                <NavDropdown.Item href="/admin/addsection">Add Section</NavDropdown.Item>
+                                <NavDropdown.Item href="#">
+                                    Section List
+                                </NavDropdown.Item>
+                            </NavDropdown>
+                        </ListGroup.Item>
+                    </ListGroup>
+                </Offcanvas.Body>
+            </Offcanvas>
+        </>
+    );
+}
+
+export default SideBar

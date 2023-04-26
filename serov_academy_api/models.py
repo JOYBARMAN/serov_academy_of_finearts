@@ -75,7 +75,7 @@ class Student(models.Model):
     email =models.EmailField(max_length=255,null=True,blank=True)
     gender=models.CharField(max_length=10,choices=GENDER_CHOICES)
     mobile =models.CharField(max_length=255)
-    photo = models.ImageField(upload_to='images/student/')
+    photo = models.ImageField(upload_to='images/student/',null=True,blank=True)
     blood =models.CharField(max_length=10,choices=BLOOD_CHOICES)
     address =models.CharField(max_length=255,null=True,blank=True)
     father_name =models.CharField(max_length=255,null=True,blank=True)

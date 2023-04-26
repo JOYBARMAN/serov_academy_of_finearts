@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from account_api.renderers import UserRenderers
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.parsers import MultiPartParser, FormParser
 
 # Api view for carousel start
 
@@ -143,12 +144,14 @@ class StudentSectionDetail(APIView):
 
 class StudentList(APIView):
     renderer_classes = [UserRenderers]
+    # parser_classes = (MultiPartParser, FormParser)
     def get(self, request, format=None):
         student = Student.objects.all()
         serializer = StudentSerializers(student, many=True)
         return Response(serializer.data,status=status.HTTP_200_OK)
 
     def post(self, request, format=None):
+        print(request.data)
         serializer = StudentSerializers(data=request.data)
         if serializer.is_valid():
             serializer.save()
