@@ -143,8 +143,8 @@ class StudentSectionDetail(APIView):
 # Api view for student start
 
 class StudentList(APIView):
+    parser_classes = (MultiPartParser, FormParser)
     renderer_classes = [UserRenderers]
-    # parser_classes = (MultiPartParser, FormParser)
     def get(self, request, format=None):
         student = Student.objects.all()
         serializer = StudentSerializers(student, many=True)
@@ -157,6 +157,7 @@ class StudentList(APIView):
             serializer.save()
             return Response({"msg":"Data Post Successfully"}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 class StudentDetail(APIView):
     renderer_classes = [UserRenderers]

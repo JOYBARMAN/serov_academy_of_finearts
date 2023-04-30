@@ -13,7 +13,8 @@ BLOOD_CHOICES=(
     ("B-","B-"),
     ("O+","O+"),
     ("O-","O-"),
-    ("AB+","AB-")
+    ("AB+","AB+"),
+    ("AB-","AB-")
 )
 MONTH_CHOISE = (
     ("january","january"),
