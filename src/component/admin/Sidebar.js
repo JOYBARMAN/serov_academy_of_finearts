@@ -22,21 +22,18 @@ const SideBar = () => {
                     <ListGroup defaultActiveKey="#link1">
                         <ListGroup.Item className='' >
                             <NavDropdown title="Student" id="basic-nav-dropdown">
-                                <NavDropdown.Item href="/admin/addstudent">Add Student</NavDropdown.Item>
-                                <NavDropdown.Item href="#">
+                                <NavDropdown.Item href="/admin/allstudent">
                                     Student List
                                 </NavDropdown.Item>
+                                <NavDropdown.Item href="/admin/addstudent">Add Student</NavDropdown.Item>
                             </NavDropdown>
                         </ListGroup.Item>
-                        {/* <ListGroup.Item action href="/write">
-                            Write Article
-                        </ListGroup.Item> */}
                         <ListGroup.Item className='' >
                             <NavDropdown title="Section" id="basic-nav-dropdown">
-                                <NavDropdown.Item href="/admin/addsection">Add Section</NavDropdown.Item>
                                 <NavDropdown.Item href="#">
                                     Section List
                                 </NavDropdown.Item>
+                                <NavDropdown.Item href="/admin/addsection">Add Section</NavDropdown.Item>
                             </NavDropdown>
                         </ListGroup.Item>
                     </ListGroup>

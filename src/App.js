@@ -19,6 +19,7 @@ import About from './component/about/About';
 import Product from './component/product/Product';
 import Contact from './component/contact/Contact';
 import AddSection from './component/admin/section/AddSection';
+import AllStudent from './component/admin/student/AllStudent';
 function App() {
   const { access_token } = useSelector(state => state.auth)
   return (
@@ -39,6 +40,7 @@ function App() {
             <Route path="admin" element={<AdminLayout />}>
               <Route index element={<Admin />} />
               <Route path="addstudent" element={<AddStudent />} />
+              <Route path="allstudent" element={<AllStudent />} />
               <Route path="addsection" element={<AddSection />} />
             </Route>
             <Route path="*" element={<Notfound />} />

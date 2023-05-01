@@ -4,6 +4,14 @@ export const seroveAcademyApi = createApi({
   reducerPath: 'seroveAcademyApi',
   baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:8000/api/academy/' }),
   endpoints: (builder) => ({
+    getAllStudent:builder.query({
+      query:()=>{
+        return{
+          url:'student/',
+          method:'GET',
+        }
+      }
+    }),
     addStudent: builder.mutation({
       query: (data) => {
         return {
@@ -21,9 +29,6 @@ export const seroveAcademyApi = createApi({
         return{
           url:'section/',
           method:'GET',
-          // headers:{
-          //   'authorization':`Bearer ${access_token}`
-          // }
         }
       }
     }),
@@ -42,7 +47,7 @@ export const seroveAcademyApi = createApi({
   }),
 })
 
-export const { useAddStudentMutation, useAddSectionMutation,useGetAllSectionQuery } = seroveAcademyApi
+export const { useGetAllStudentQuery,useAddStudentMutation, useAddSectionMutation,useGetAllSectionQuery } = seroveAcademyApi
 
 
 // set a base url for axios
