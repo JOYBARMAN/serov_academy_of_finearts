@@ -2,11 +2,15 @@ from .serializers import *
 from .models import *
 from django.http import Http404
 from rest_framework.views import APIView
+from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
 from rest_framework import status
 from account_api.renderers import UserRenderers
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.parsers import MultiPartParser, FormParser
+from .pagination import MyPagination
+from rest_framework import filters
+
 
 # Api view for carousel start
 
@@ -138,6 +142,7 @@ class StudentSectionDetail(APIView):
         stu_section.delete()
         return Response({"msg":"Data Successfully Deleted"},status=status.HTTP_204_NO_CONTENT)
     
+    
 # Api view for student section end
 
 # Api view for student start
@@ -145,19 +150,38 @@ class StudentSectionDetail(APIView):
 class StudentList(APIView):
     parser_classes = (MultiPartParser, FormParser)
     renderer_classes = [UserRenderers]
+    pagination_class = MyPagination
+
     def get(self, request, format=None):
         student = Student.objects.all()
-        serializer = StudentSerializers(student, many=True)
-        return Response(serializer.data,status=status.HTTP_200_OK)
+        paginator = self.pagination_class()
+        result_page = paginator.paginate_queryset(student, request)
+        serializer = StudentSerializers(result_page, many=True)
+        return paginator.get_paginated_response(serializer.data)
 
     def post(self, request, format=None):
-        print(request.data)
         serializer = StudentSerializers(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response({"msg":"Data Post Successfully"}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class StudentSearch(APIView):
+    renderer_classes = [UserRenderers]
+    pagination_class = MyPagination
+    def get(self, request):
+        search_query = request.query_params.get('search', '')
+        students = Student.objects.filter(name__icontains=search_query)
+        paginator = self.pagination_class()
+        result_page = paginator.paginate_queryset(students, request)
+        serializer = StudentSerializers(result_page, many=True)
+        return paginator.get_paginated_response(serializer.data)
+
+# class StudentSearch(ListAPIView):
+#     queryset = Student.objects.all()
+#     serializer_class = StudentSerializers
+#     filter_backends = [filters.SearchFilter]
+#     search_fields = ['name']
 
 class StudentDetail(APIView):
     renderer_classes = [UserRenderers]

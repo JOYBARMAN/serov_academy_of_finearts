@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import CarouselList,CarouselDetail,TrainerList,TrainerDetail,StudentSectionList,StudentSectionDetail,StudentList,StudentDetail,StudentPaymentList,StudentPaymentDetail,CourseList,CourseDetail,CourseRatingList,CourseRatingDetail,ArtProductList,ArtProductDetail,ArtProductRatingList,ArtProductRatingDetail,BlogList,BlogDetail,ContactList,ContactDetail
+from .views import CarouselList,CarouselDetail,TrainerList,TrainerDetail,StudentSectionList,StudentSectionDetail,StudentList,StudentSearch,StudentDetail,StudentPaymentList,StudentPaymentDetail,CourseList,CourseDetail,CourseRatingList,CourseRatingDetail,ArtProductList,ArtProductDetail,ArtProductRatingList,ArtProductRatingDetail,BlogList,BlogDetail,ContactList,ContactDetail
 
 urlpatterns = [
     path('carousel/',CarouselList.as_view()),
@@ -9,6 +9,7 @@ urlpatterns = [
     path('section/',StudentSectionList.as_view()),
     path('section/<int:pk>/',StudentSectionDetail.as_view()),
     path('student/',StudentList.as_view()),
+    path('student/search/',StudentSearch.as_view()),
     path('student/<int:pk>/',StudentDetail.as_view()),
     path('student_payment/',StudentPaymentList.as_view()),
     path('student_payment/<int:pk>/',StudentPaymentDetail.as_view()),

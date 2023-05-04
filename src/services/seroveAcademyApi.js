@@ -24,6 +24,15 @@ export const seroveAcademyApi = createApi({
         }
       }
     }),
+    deleteStudent: builder.mutation({
+      query: (id) => {
+        console.log("delete id ",id)
+        return {
+          url: `student/${id}/`,
+          method: 'DELETE',
+        }
+      }
+    }),
     getAllSection:builder.query({
       query:()=>{
         return{
@@ -47,7 +56,7 @@ export const seroveAcademyApi = createApi({
   }),
 })
 
-export const { useGetAllStudentQuery,useAddStudentMutation, useAddSectionMutation,useGetAllSectionQuery } = seroveAcademyApi
+export const { useGetAllStudentQuery,useAddStudentMutation,useDeleteStudentMutation, useAddSectionMutation,useGetAllSectionQuery } = seroveAcademyApi
 
 
 // set a base url for axios
