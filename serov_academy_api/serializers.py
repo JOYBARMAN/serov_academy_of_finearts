@@ -21,6 +21,12 @@ class StudentSerializers(serializers.ModelSerializer):
     class Meta:
         model = Student
         fields = '__all__'
+        depth = 1
+
+class StudentPostSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Student
+        fields = '__all__'
 
 class StudentPaymentSerializers(serializers.ModelSerializer):
     class Meta:

@@ -160,7 +160,7 @@ class StudentList(APIView):
         return paginator.get_paginated_response(serializer.data)
 
     def post(self, request, format=None):
-        serializer = StudentSerializers(data=request.data)
+        serializer = StudentPostSerializers(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response({"msg":"Data Post Successfully"}, status=status.HTTP_201_CREATED)
@@ -177,11 +177,21 @@ class StudentSearch(APIView):
         serializer = StudentSerializers(result_page, many=True)
         return paginator.get_paginated_response(serializer.data)
 
-# class StudentSearch(ListAPIView):
-#     queryset = Student.objects.all()
-#     serializer_class = StudentSerializers
-#     filter_backends = [filters.SearchFilter]
-#     search_fields = ['name']
+class StudentFilterBySection(APIView):
+    renderer_classes = [UserRenderers]
+    pagination_class = MyPagination
+
+    def get(self, request):
+        section = request.GET.get('section')
+        if section is not None:
+            students = Student.objects.filter(section=section)
+            paginator = self.pagination_class()
+            result_page = paginator.paginate_queryset(students, request)
+            serializer = StudentSerializers(result_page, many=True)
+            return paginator.get_paginated_response(serializer.data)
+        else:
+            return Response({'error': 'Please provide section parameter in the URL'}, status=status.HTTP_400_BAD_REQUEST)
+
 
 class StudentDetail(APIView):
     renderer_classes = [UserRenderers]
@@ -198,7 +208,7 @@ class StudentDetail(APIView):
 
     def put(self, request, pk, format=None):
         student = self.get_object(pk)
-        serializer = StudentSerializers(student, data=request.data)
+        serializer = StudentPostSerializers(student, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response({"msg":"Data Successfully Updated"}, status=status.HTTP_201_CREATED)

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Button, Col, Container, Row, Table, Spinner, Pagination, Form, Dropdown, DropdownButton } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import { domain } from '../../../services/seroveAcademyApi'
+import { domain, useGetAllSectionQuery } from '../../../services/seroveAcademyApi'
 import { FiEdit } from 'react-icons/fi'
 import { MdDeleteOutline } from 'react-icons/md'
 import { toast } from 'react-toastify'
@@ -12,24 +12,10 @@ const AllStudent = () => {
     const [searchQuery, setSearchQuery] = useState('')
     const [isLoading, setIsLoading] = useState(true)
     const [error, setError] = useState('')
+    const sectionData = useGetAllSectionQuery()
 
     // search student data
-    // const handleSearch = async (e) => {
-    //     e.preventDefault();
-    //     setIsLoading(true)
-    //     axios.get(`${domain}/student/search/?search=${searchQuery}`)
-    //         .then(response => {
-    //             setStudentData(response.data)
-    //             setData(response.data.results);
-    //             setIsLoading(false)
-    //         })
-    //         .catch(error => {
-    //             setError(error)
-    //             setIsLoading(false)
-    //         });
-    // }
-
-    function handleSearchQueryChange(event) {
+    const handleSearchQueryChange = (event) => {
         const query = event.target.value;
         setSearchQuery(query);
         if (query.trim() !== '') {
@@ -49,6 +35,22 @@ const AllStudent = () => {
             setIsLoading(false)
             setData([]);
         }
+    }
+
+    // filter Student data section wise
+
+    const handleFilter = (id) => {
+        setIsLoading(true)
+        axios.get(`${domain}/student/section/?section=${id}`)
+            .then(response => {
+                setIsLoading(false)
+                setStudentData(response.data)
+                setData(response.data.results);
+            })
+            .catch(error => {
+                setIsLoading(false)
+                setError(error)
+            });
     }
 
     // Delete a student data 
@@ -100,6 +102,7 @@ const AllStudent = () => {
                 setIsLoading(false)
                 setStudentData(response.data)
                 setData(response.data.results);
+                console.log("std",response.data)
             })
             .catch(error => {
                 setIsLoading(false)
@@ -118,13 +121,13 @@ const AllStudent = () => {
                                 <Form.Group className="my-3 d-flex">
                                     <Form.Label className='mt-2 mx-1'>Search:</Form.Label>
                                     <Form.Control className='' type="text" placeholder="Search Name" value={searchQuery} onChange={handleSearchQueryChange} />
-                                    {/* <Button type='submit'>submit</Button> */}
                                 </Form.Group>
                             </Form>
-                            <DropdownButton title="Filter By" className='m-3'>
-                                <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                                <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-                                <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+                            <DropdownButton title="Filter By Section" className='m-3'>
+                                {sectionData?.data?.map((section, key) =>
+                                    <Dropdown.Item key={key} onClick={() => { handleFilter(section.id) }}>{section.section}</Dropdown.Item>
+                                )}
+
                             </DropdownButton>
                         </div>
                         <Table responsive>
@@ -158,7 +161,7 @@ const AllStudent = () => {
                                     <tr key={key}>
                                         <td><Link to="/">{student.name}</Link></td>
                                         <td>{student.student_id}</td>
-                                        <td className='text-primary fw-bold'>{student.section}</td>
+                                        <td className='text-primary fw-bold'>{student.section.section}</td>
                                         <td>{student.gender}</td>
                                         <td>{student.mobile}</td>
                                         <td>{student.admission_date}</td>
