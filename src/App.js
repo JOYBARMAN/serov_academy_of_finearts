@@ -20,6 +20,9 @@ import Product from './component/product/Product';
 import Contact from './component/contact/Contact';
 import AddSection from './component/admin/section/AddSection';
 import AllStudent from './component/admin/student/AllStudent';
+import DetailStudent from './component/admin/student/DetailStudent';
+import EditStudent from './component/admin/student/EditStudent';
+
 function App() {
   const { access_token } = useSelector(state => state.auth)
   return (
@@ -41,6 +44,8 @@ function App() {
               <Route index element={<Admin />} />
               <Route path="addstudent" element={<AddStudent />} />
               <Route path="allstudent" element={<AllStudent />} />
+              <Route path="student/:id" element={<DetailStudent />} />
+              <Route path="student/:id/edit" element={<EditStudent />} />
               <Route path="addsection" element={<AddSection />} />
             </Route>
             <Route path="*" element={<Notfound />} />

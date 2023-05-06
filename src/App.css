@@ -4,5 +4,7 @@
     padding: 0px;
     box-sizing: border-box;
     scroll-behavior: smooth;
-    font-family: 'Itim', cursive;
+    /* font-family: 'Itim', cursive; */
+    font-family: 'Source Sans Pro', sans-serif;
+    /* font-family: 'Fira Sans', sans-serif; */
 }

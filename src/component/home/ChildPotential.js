@@ -8,16 +8,7 @@ const ChildPotential = () => {
                 <Col lg="8">
                     <div className="">
                         <h3 className="fw-bold">Unlock Your Child's Potential with the Power of Art</h3>
-                        <p className="mt-3 text-muted">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                            Pellentesque sed dolor. Aliquam congue fermentum nisl. Mauris accumsan nulla vel diam. Sed
-                            in lacus ut enim adipiscing aliquet. Nulla venenatis. In pede mi, aliquet sit amet, euismod
-                            in, auctor ut, ligula. Aliquam dapibus tincidunt metus. Praesent justo dolor, lobortis quis,
-                            lobortis dignissim, pulvinar ac, lorem. Vestibulum sed ante. Donec sagittis euismod purus.
-                            Fusce euismod consequat ante. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                            Pellentesque sed dolor. Aliquam congue fermentum nisl. Mauris accumsan nulla vel diam. Sed
-                            in lacus ut enim adipiscing aliquet. Nulla venenatis. In pede mi, aliquet sit amet, euismod
-                            in, auctor ut, ligula. Aliquam dapibus tincidunt metus. Praesent justo dolor, lobortis quis,
-                            lobortis dignissim, pulvinar ac, lorem.</p>
+                        <p className="mt-3 text-muted">Art can be a powerful tool for unlocking a child's potential. It offers a creative outlet for self-expression and helps children develop important cognitive, emotional, and social skills. Studies have shown that engaging in art can improve children's problem-solving abilities, critical thinking skills, and communication skills. It can also boost their self-esteem and help them develop a sense of identity and purpose.Encouraging your child to explore different forms of art, such as painting, drawing, sculpture, or music, can help them discover their strengths and interests. It can also be a fun way to bond with your child and create lasting memories.Whether your child is a budding artist or just starting to explore their creative side, incorporating art into their daily routine can have a positive impact on their overall development. So, unleash your child's creativity and watch them flourish!</p>
                     </div>
                 </Col>
                 <Col lg="4">

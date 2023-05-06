@@ -12,6 +12,14 @@ export const seroveAcademyApi = createApi({
         }
       }
     }),
+    detailStudent:builder.query({
+      query:(id)=>{
+        return{
+          url:`student/${id}/`,
+          method:'GET',
+        }
+      }
+    }),
     addStudent: builder.mutation({
       query: (data) => {
         return {
@@ -56,7 +64,7 @@ export const seroveAcademyApi = createApi({
   }),
 })
 
-export const { useGetAllStudentQuery,useAddStudentMutation,useDeleteStudentMutation, useAddSectionMutation,useGetAllSectionQuery } = seroveAcademyApi
+export const { useGetAllStudentQuery,useDetailStudentQuery,useAddStudentMutation,useDeleteStudentMutation, useAddSectionMutation,useGetAllSectionQuery } = seroveAcademyApi
 
 
 // set a base url for axios

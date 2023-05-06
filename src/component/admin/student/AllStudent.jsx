@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { domain, useGetAllSectionQuery } from '../../../services/seroveAcademyApi'
 import { FiEdit } from 'react-icons/fi'
 import { MdDeleteOutline } from 'react-icons/md'
+import {BsFilter} from 'react-icons/bs'
 import { toast } from 'react-toastify'
 import axios from 'axios'
 const AllStudent = () => {
@@ -102,7 +103,6 @@ const AllStudent = () => {
                 setIsLoading(false)
                 setStudentData(response.data)
                 setData(response.data.results);
-                console.log("std",response.data)
             })
             .catch(error => {
                 setIsLoading(false)
@@ -116,14 +116,14 @@ const AllStudent = () => {
                 <hr />
                 <Row className='justify-content-center'>
                     <Col lg="10" >
-                        <div className='d-flex'>
+                        <div className='d-flex justify-content-between'>
                             <Form className=''>
                                 <Form.Group className="my-3 d-flex">
                                     <Form.Label className='mt-2 mx-1'>Search:</Form.Label>
                                     <Form.Control className='' type="text" placeholder="Search Name" value={searchQuery} onChange={handleSearchQueryChange} />
                                 </Form.Group>
                             </Form>
-                            <DropdownButton title="Filter By Section" className='m-3'>
+                            <DropdownButton title={<BsFilter />} className='mt-3 me-3'>
                                 {sectionData?.data?.map((section, key) =>
                                     <Dropdown.Item key={key} onClick={() => { handleFilter(section.id) }}>{section.section}</Dropdown.Item>
                                 )}
@@ -159,7 +159,7 @@ const AllStudent = () => {
                                     : ""}
                                 {data?.map((student, key) =>
                                     <tr key={key}>
-                                        <td><Link to="/">{student.name}</Link></td>
+                                        <td><Link to={`/admin/student/${student.id}`}>{student.name}</Link></td>
                                         <td>{student.student_id}</td>
                                         <td className='text-primary fw-bold'>{student.section.section}</td>
                                         <td>{student.gender}</td>
