@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Col, Container, Row, Table, Spinner, Pagination, Form, Dropdown, DropdownButton } from 'react-bootstrap'
+import { Alert, Button, Col, Container, Row, Table, Spinner, Pagination, Form, Dropdown, DropdownButton } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { domain, useGetAllSectionQuery } from '../../../services/seroveAcademyApi'
 import { FiEdit } from 'react-icons/fi'
 import { MdDeleteOutline } from 'react-icons/md'
-import {BsFilter} from 'react-icons/bs'
+import { BsFilter } from 'react-icons/bs'
 import { toast } from 'react-toastify'
 import axios from 'axios'
 const AllStudent = () => {
@@ -39,7 +39,6 @@ const AllStudent = () => {
     }
 
     // filter Student data section wise
-
     const handleFilter = (id) => {
         setIsLoading(true)
         axios.get(`${domain}/student/section/?section=${id}`)
@@ -130,6 +129,11 @@ const AllStudent = () => {
 
                             </DropdownButton>
                         </div>
+
+                        {error ?
+                            <Alert variant="danger" className='my-2'>Something is wrong !</Alert>
+                            : ""}
+
                         <Table responsive>
                             <thead>
                                 <tr>
@@ -143,13 +147,6 @@ const AllStudent = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {error ?
-                                    <tr>
-                                        <td>
-                                            <p className='text-danger'>Something is wrong !</p>
-                                        </td>
-                                    </tr>
-                                    : ""}
                                 {isLoading ?
                                     <tr>
                                         <td>
@@ -167,7 +164,7 @@ const AllStudent = () => {
                                         <td>{student.admission_date}</td>
                                         <td>
                                             <div className='d-flex'>
-                                                <Button className='btn-sm rounded-circle'><FiEdit /></Button>
+                                                <Link to={`/admin/student/${student.id}/edit`} className='btn btn-primary btn-sm rounded-circle'><FiEdit /></Link>
 
                                                 <Button className='btn-danger btn-sm rounded-circle mx-2' onClick={() => { handleDelete(student.id) }}><MdDeleteOutline /></Button>
                                             </div>

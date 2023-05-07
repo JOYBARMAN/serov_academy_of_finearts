@@ -194,6 +194,7 @@ class StudentFilterBySection(APIView):
 
 
 class StudentDetail(APIView):
+    parser_classes = (MultiPartParser, FormParser)
     renderer_classes = [UserRenderers]
     def get_object(self, pk):
         try:

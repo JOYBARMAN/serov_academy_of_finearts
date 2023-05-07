@@ -7,7 +7,6 @@ const DetailStudent = () => {
     const { data } = useDetailStudentQuery(id)
     return (
         <>
-        {/* <Link to={`/admin/student/${student.id}`}></Link> */}
             <Container>
                 <h2 className='my-2'>Student Detail Page</h2>
                 <hr />
