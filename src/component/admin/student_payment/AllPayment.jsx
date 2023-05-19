@@ -7,8 +7,8 @@ import { MdDeleteOutline } from 'react-icons/md'
 import { BsFilter } from 'react-icons/bs'
 import { toast } from 'react-toastify'
 import axios from 'axios'
-const AllStudent = () => {
-    const [studentData, setStudentData] = useState([])
+const AllPayment = () => {
+    const [paymentData, setPaymentData] = useState([])
     const [data, setData] = useState([])
     const [searchQuery, setSearchQuery] = useState('')
     const [isLoading, setIsLoading] = useState(true)
@@ -21,10 +21,10 @@ const AllStudent = () => {
         setSearchQuery(query);
         if (query.trim() !== '') {
             setIsLoading(true)
-            axios.get(`${domain}/student/search/?search=${query}`)
+            axios.get(`${domain}/student_payment/search/?name=${query}`)
                 .then(response => {
                     setIsLoading(false)
-                    setStudentData(response.data)
+                    setPaymentData(response.data)
                     setData(response.data.results);
                 })
                 .catch(error => {
@@ -34,26 +34,27 @@ const AllStudent = () => {
         }
         else {
             setIsLoading(true)
-            axios.get(`${domain}/student/`)
-            .then(response => {
-                setIsLoading(false)
-                setStudentData(response.data)
-                setData(response.data.results);
-            })
-            .catch(error => {
-                setIsLoading(false)
-                setError(error)
-            });
-        }
+            axios.get(`${domain}/student_payment/`)
+                .then(response => {
+                    setIsLoading(false)
+                    setPaymentData(response.data)
+                    setData(response.data.results);
+                })
+                .catch(error => {
+                    setIsLoading(false)
+                    setError(error)
+                });
+        };
+
     }
 
     // filter Student data section wise
     const handleFilter = (id) => {
         setIsLoading(true)
-        axios.get(`${domain}/student/section/?section=${id}`)
+        axios.get(`${domain}/student_payment/section/?section=${id}`)
             .then(response => {
                 setIsLoading(false)
-                setStudentData(response.data)
+                setPaymentData(response.data)
                 setData(response.data.results);
             })
             .catch(error => {
@@ -64,10 +65,10 @@ const AllStudent = () => {
 
     // Delete a student data 
     const handleDelete = (id) => {
-        axios.delete(`${domain}/student/${id}/`)
+        axios.delete(`${domain}/student_payment/${id}/`)
             .then(response => {
                 setData(data.filter(item => item.id !== id));
-                toast.success("Student Deleted")
+                toast.success("Student Payment Deleted")
             })
             .catch(error => {
                 setError(error)
@@ -77,10 +78,10 @@ const AllStudent = () => {
     // Get next page student data
     const nextPage = () => {
         setIsLoading(true)
-        axios.get(studentData.next)
+        axios.get(paymentData.next)
             .then(response => {
                 setIsLoading(false)
-                setStudentData(response.data)
+                setPaymentData(response.data)
                 setData(response.data.results);
             })
             .catch(error => {
@@ -92,10 +93,10 @@ const AllStudent = () => {
     // Get Previous page student data
     const previousPage = () => {
         setIsLoading(true)
-        axios.get(studentData.previous)
+        axios.get(paymentData.previous)
             .then(response => {
                 setIsLoading(false)
-                setStudentData(response.data)
+                setPaymentData(response.data)
                 setData(response.data.results);
             })
             .catch(error => {
@@ -106,10 +107,10 @@ const AllStudent = () => {
 
     // Get all student data
     useEffect(() => {
-        axios.get(`${domain}/student/`)
+        axios.get(`${domain}/student_payment/`)
             .then(response => {
                 setIsLoading(false)
-                setStudentData(response.data)
+                setPaymentData(response.data)
                 setData(response.data.results);
             })
             .catch(error => {
@@ -120,7 +121,7 @@ const AllStudent = () => {
     return (
         <>
             <Container>
-                <h2 className='my-2'>Student List</h2>
+                <h2 className='my-2'>All Student Payment List</h2>
                 <hr />
                 <Row className='justify-content-center'>
                     <Col lg="10" >
@@ -146,12 +147,11 @@ const AllStudent = () => {
                         <Table responsive>
                             <thead>
                                 <tr>
-                                    <th>Name</th>
-                                    <th>Student Id</th>
-                                    <th>Section</th>
-                                    <th>Gender</th>
-                                    <th>Mobile</th>
-                                    <th>Addmision Date</th>
+                                    <th>Student Name</th>
+                                    <th>Payment Month</th>
+                                    <th>Payment Year</th>
+                                    <th>Payment Fee</th>
+                                    <th>Payment Date</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -163,19 +163,18 @@ const AllStudent = () => {
                                         </td>
                                     </tr>
                                     : ""}
-                                {data?.map((student, key) =>
+                                {data?.map((payment, key) =>
                                     <tr key={key}>
-                                        <td><Link to={`/admin/student/${student.id}`}>{student.name}</Link></td>
-                                        <td>{student.student_id}</td>
-                                        <td className='text-primary fw-bold'>{student.section.section}</td>
-                                        <td>{student.gender}</td>
-                                        <td>{student.mobile}</td>
-                                        <td>{student.admission_date}</td>
+                                        <td><Link to="#">{payment.student.name}</Link></td>
+                                        <td className='text-primary fw-bold'>{payment.payment_month}</td>
+                                        <td>{payment.payment_year}</td>
+                                        <td>{payment.payment_fee}</td>
+                                        <td>{payment.payment_date}</td>
                                         <td>
                                             <div className='d-flex'>
-                                                <Link to={`/admin/student/${student.id}/edit`} className='btn btn-primary btn-sm rounded-circle'><FiEdit /></Link>
+                                                <Link to="#" className='btn btn-primary btn-sm rounded-circle'><FiEdit /></Link>
 
-                                                <Button className='btn-danger btn-sm rounded-circle mx-2' onClick={() => { handleDelete(student.id) }}><MdDeleteOutline /></Button>
+                                                <Button className='btn-danger btn-sm rounded-circle mx-2' onClick={() => { handleDelete(payment.id) }}><MdDeleteOutline /></Button>
                                             </div>
                                         </td>
                                     </tr>
@@ -186,9 +185,9 @@ const AllStudent = () => {
                         <div className='my-3'>
                             <Pagination className='justify-content-center'>
 
-                                {studentData.previous ? <Button className='btn-sm mx-3' onClick={() => { previousPage() }}>Previous</Button> : <Button className='btn-sm disabled mx-3'>Previous</Button>}
+                                {paymentData.previous ? <Button className='btn-sm mx-3' onClick={() => { previousPage() }}>Previous</Button> : <Button className='btn-sm disabled mx-3'>Previous</Button>}
 
-                                {studentData.next ? <Button className='btn-sm' onClick={() => { nextPage() }}>Next</Button> : <Button className='btn-sm disabled '>Next</Button>}
+                                {paymentData.next ? <Button className='btn-sm' onClick={() => { nextPage() }}>Next</Button> : <Button className='btn-sm disabled '>Next</Button>}
 
                             </Pagination>
                         </div>
@@ -199,4 +198,4 @@ const AllStudent = () => {
     )
 }
 
-export default AllStudent
+export default AllPayment

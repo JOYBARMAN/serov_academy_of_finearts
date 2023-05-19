@@ -1,7 +1,8 @@
 import './App.css'
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { ToastContainer} from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useSelector } from 'react-redux';
 import Home from './component/home/Home';
 import Layout from './component/Layout';
 import Course from './component/course/Course';
@@ -14,7 +15,6 @@ import Admin from './component/admin/Admin';
 import AdminLayout from './component/admin/AdminLayout';
 import AddStudent from './component/admin/student/AddStudent';
 import Notfound from './component/Notfound';
-import { useSelector } from 'react-redux';
 import About from './component/about/About';
 import Product from './component/product/Product';
 import Contact from './component/contact/Contact';
@@ -22,6 +22,8 @@ import AddSection from './component/admin/section/AddSection';
 import AllStudent from './component/admin/student/AllStudent';
 import DetailStudent from './component/admin/student/DetailStudent';
 import EditStudent from './component/admin/student/EditStudent';
+import AllPayment from './component/admin/student_payment/AllPayment';
+import AddPayment  from './component/admin/student_payment/AddPayment';
 
 function App() {
   const { access_token } = useSelector(state => state.auth)
@@ -47,6 +49,8 @@ function App() {
               <Route path="student/:id" element={<DetailStudent />} />
               <Route path="student/:id/edit" element={<EditStudent />} />
               <Route path="addsection" element={<AddSection />} />
+              <Route path="allpayment" element={<AllPayment />} />
+              <Route path="addpayment" element={<AddPayment />} />
             </Route>
             <Route path="*" element={<Notfound />} />
           </Route>

@@ -227,18 +227,63 @@ class StudentDetail(APIView):
 
 class StudentPaymentList(APIView):
     renderer_classes = [UserRenderers]
+    pagination_class = MyPagination
     def get(self, request, format=None):
         student_payment = StudentPayment.objects.all()
-        serializer = StudentPaymentSerializers(student_payment, many=True)
-        return Response(serializer.data,status=status.HTTP_200_OK)
+        paginator = self.pagination_class()
+        result_page = paginator.paginate_queryset(student_payment, request)
+        serializer = StudentPaymentSerializers(result_page, many=True)
+        return paginator.get_paginated_response(serializer.data)
 
     def post(self, request, format=None):
-        serializer = StudentPaymentSerializers(data=request.data)
+        serializer = StudentPaymentPostSerializers(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response({"msg":"Data Post Successfully"}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class StudentPaymentSearch(APIView):
+    renderer_classes = [UserRenderers]
+    pagination_class = MyPagination
+    def get(self, request):
+        search_query = request.query_params.get('name', '')
+        student_payment = StudentPayment.objects.filter(student__name__icontains=search_query)
+        paginator = self.pagination_class()
+        result_page = paginator.paginate_queryset(student_payment, request)
+        serializer = StudentPaymentSerializers(result_page, many=True)
+        return paginator.get_paginated_response(serializer.data)
+    
+
+class StudentPaymentFilterBySection(APIView):
+    renderer_classes = [UserRenderers]
+    pagination_class = MyPagination
+
+    def get(self, request):
+        section = request.GET.get('section')
+        if section is not None:
+            student_payment = StudentPayment.objects.filter(student__section=section)
+            paginator = self.pagination_class()
+            result_page = paginator.paginate_queryset(student_payment, request)
+            serializer = StudentPaymentSerializers(result_page, many=True)
+            return paginator.get_paginated_response(serializer.data)
+        else:
+            return Response({'error': 'Please provide section parameter in the URL'}, status=status.HTTP_400_BAD_REQUEST)
+        
+class StudentPaymentFilterByStudent(APIView):
+    renderer_classes = [UserRenderers]
+    pagination_class = MyPagination
+
+    def get(self, request):
+        student = request.GET.get('student')
+        if student is not None:
+            student_payment = StudentPayment.objects.filter(student=student)
+            paginator = self.pagination_class()
+            result_page = paginator.paginate_queryset(student_payment, request)
+            serializer = StudentPaymentSerializers(result_page, many=True)
+            return paginator.get_paginated_response(serializer.data)
+        else:
+            return Response({'error': 'Please provide student parameter in the URL'}, status=status.HTTP_400_BAD_REQUEST)
+    
 class StudentPaymentDetail(APIView):
     renderer_classes = [UserRenderers]
     def get_object(self, pk):
@@ -254,7 +299,7 @@ class StudentPaymentDetail(APIView):
 
     def put(self, request, pk, format=None):
         student_payment = self.get_object(pk)
-        serializer = StudentPaymentSerializers(student_payment, data=request.data)
+        serializer = StudentPaymentPostSerializers(student_payment, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response({"msg":"Data Successfully Updated"}, status=status.HTTP_201_CREATED)

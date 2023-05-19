@@ -48,7 +48,7 @@ class Trainer(models.Model):
     mobile =models.CharField(max_length=15)
     bio = models.TextField()
     designation = models.CharField(max_length=255,null=True,blank=True)
-    photo = models.ImageField(upload_to='images/trainer/')
+    photo = models.ImageField(upload_to='images/trainer/',null=True,blank=True)
     blood =models.CharField(max_length=10,choices=BLOOD_CHOICES)
     address =models.CharField(max_length=255,null=True,blank=True)
     enrollment_date =models.DateField()
@@ -91,6 +91,7 @@ class Student(models.Model):
 class StudentPayment(models.Model):
     student = models.ForeignKey(Student,on_delete=models.CASCADE)
     payment_month = models.CharField(max_length=15,choices=MONTH_CHOISE)
+    payment_year =models.CharField(max_length=15)
     payment_fee = models.CharField(max_length=100)
     payment_date = models.DateField()
     created_at = models.DateTimeField(auto_now_add=True)

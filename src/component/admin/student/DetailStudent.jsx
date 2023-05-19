@@ -1,13 +1,84 @@
-import React from 'react'
-import { useParams,Link } from 'react-router-dom'
-import { Container, Col, Row, Image,Button } from 'react-bootstrap'
-import { useDetailStudentQuery } from '../../../services/seroveAcademyApi'
+import React, { useEffect, useState } from 'react'
+import { useParams, Link } from 'react-router-dom'
+import { Container, Col, Row, Image, Button, Form, DropdownButton, Dropdown, Alert, Table, Spinner, Pagination } from 'react-bootstrap'
+import { useDetailStudentQuery, domain } from '../../../services/seroveAcademyApi'
+import { MdDeleteOutline } from 'react-icons/md'
+import { BsFilter } from 'react-icons/bs'
+import { FiEdit } from 'react-icons/fi'
+import axios from 'axios'
+import { toast } from 'react-toastify'
 const DetailStudent = () => {
     const { id } = useParams()
     const { data } = useDetailStudentQuery(id)
+    const [paymentRes, setPaymentRes] = useState([])
+    const [paymentData, setPaymentData] = useState([])
+    // const [studentData, setStudentData] = useState([])
+    // const [data, setData] = useState([])
+    // const [searchQuery, setSearchQuery] = useState('')
+    const [isLoading, setIsLoading] = useState(true)
+    const [error, setError] = useState('')
+
+    // Delete a student payment data 
+    const handleDelete = (id) => {
+        axios.delete(`${domain}/student_payment/${id}/`)
+            .then(response => {
+                setPaymentData(paymentData.filter(item => item.id !== id));
+                toast.success("Student Payment Deleted")
+                console.log("res", response)
+            })
+            .catch(error => {
+                setError(error)
+                console.log("err", error)
+            });
+    }
+
+    // Get next page student data
+    const nextPage = () => {
+        setIsLoading(true)
+        axios.get(paymentData.next)
+            .then(response => {
+                setIsLoading(false)
+                setPaymentRes(response.data)
+                setPaymentData(response.data.results);
+            })
+            .catch(error => {
+                setIsLoading(false)
+                setError(error)
+            });
+    }
+
+    // Get Previous page student data
+    const previousPage = () => {
+        setIsLoading(true)
+        axios.get(paymentData.previous)
+            .then(response => {
+                setIsLoading(false)
+                setPaymentRes(response.data)
+                setPaymentData(response.data.results);
+            })
+            .catch(error => {
+                setIsLoading(false)
+                setError(error)
+            });
+    }
+    useEffect(() => {
+        setIsLoading(true)
+        axios.get(`${domain}/student_payment/student/?student=${id}`)
+            .then(response => {
+                setIsLoading(false)
+                setPaymentRes(response.data)
+                setPaymentData(response.data.results);
+            })
+            .catch(error => {
+                setIsLoading(false)
+                setError(error)
+            });
+    }, [id]);
     return (
         <>
             <Container>
+                {/* student detail section  start*/}
+
                 <h2 className='my-2'>Student Detail Page</h2>
                 <hr />
                 <Row className='justify-content-center my-2'>
@@ -18,7 +89,7 @@ const DetailStudent = () => {
                     <Col lg="8">
                         <Row className=' text-lg-start text-center'>
                             <Col md={4}>
-                                <Image src={`http://localhost:8000${data?.photo}`} height={150} width={150}/>
+                                <Image src={`http://localhost:8000${data?.photo}`} height={150} width={150} />
                             </Col>
                             <Col md={4}>
                                 <p>Name : <span className='text-primary'>{data?.name}</span></p>
@@ -35,6 +106,87 @@ const DetailStudent = () => {
                                 <p>Admission : {data?.admission_date}</p>
                             </Col>
                         </Row>
+                    </Col>
+                </Row>
+                {/* student detail section end  */}
+
+                {/* student payment section start */}
+                <h2 className='mt-5 mb-2'>Payment Information</h2>
+                <hr />
+                <Row className='justify-content-center'>
+                    <Col lg="10" >
+                        {/* <div className='d-flex justify-content-between'>
+                            <Form className=''>
+                                <Form.Group className="my-3 d-flex">
+                                    <Form.Label className='mt-2 mx-1'>Search:</Form.Label>
+                                    <Form.Control className='' type="text" placeholder="Search Name" value={searchQuery} onChange={handleSearchQueryChange} />
+                                </Form.Group>
+                            </Form>
+                            <DropdownButton title={<BsFilter />} className='mt-3 me-3'>
+                                {sectionData?.data?.map((section, key) =>
+                                    <Dropdown.Item key={key} onClick={() => { handleFilter(section.id) }}>{section.section}</Dropdown.Item>
+                                )}
+
+                            </DropdownButton>
+                        </div> */}
+
+                        {error ?
+                            <Alert variant="danger" className='my-2'>Something is wrong !</Alert>
+                            : ""}
+
+                        <Table responsive>
+                            <thead>
+                                <tr>
+                                    <th>Student Name</th>
+                                    <th>Payment Month</th>
+                                    <th>Payment Fee</th>
+                                    <th>Payment Date</th>
+                                    <th>Payment Year</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {isLoading ?
+                                    <tr>
+                                        <td>
+                                            <Spinner animation="border" variant="primary" />
+                                        </td>
+                                    </tr>
+                                    : ""}
+                                {paymentData.length ? (
+                                    paymentData.map((payment, key) => (
+                                        <tr key={key}>
+                                            <td><Link to="#">{payment.student.name}</Link></td>
+                                            <td className='text-primary fw-bold'>{payment.payment_month}</td>
+                                            <td>{payment.payment_fee}</td>
+                                            <td>{payment.payment_date}</td>
+                                            <td>{payment.payment_year}</td>
+                                            <td>
+                                                <div className='d-flex'>
+                                                    <Link to="#" className='btn btn-primary btn-sm rounded-circle'><FiEdit /></Link>
+                                                    <Button className='btn-danger btn-sm rounded-circle mx-2' onClick={() => { handleDelete(payment.id) }}><MdDeleteOutline /></Button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    ))
+                                ) : (
+                                    <tr>
+                                        <td colSpan="6" className="text-center text-danger">No payment data available</td>
+                                    </tr>
+                                )}
+
+
+                            </tbody>
+                        </Table>
+                        <div className='my-3'>
+                            <Pagination className='justify-content-center'>
+
+                                {paymentRes.previous ? <Button className='btn-sm mx-3' onClick={() => { previousPage() }}>Previous</Button> : <Button className='btn-sm disabled mx-3'>Previous</Button>}
+
+                                {paymentRes.next ? <Button className='btn-sm' onClick={() => { nextPage() }}>Next</Button> : <Button className='btn-sm disabled '>Next</Button>}
+
+                            </Pagination>
+                        </div>
                     </Col>
                 </Row>
             </Container >

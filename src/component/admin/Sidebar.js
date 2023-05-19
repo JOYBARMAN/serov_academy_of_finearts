@@ -36,6 +36,14 @@ const SideBar = () => {
                                 <NavDropdown.Item href="/admin/addsection">Add Section</NavDropdown.Item>
                             </NavDropdown>
                         </ListGroup.Item>
+                        <ListGroup.Item className='' >
+                            <NavDropdown title="Student Payment" id="basic-nav-dropdown">
+                                <NavDropdown.Item href="/admin/allpayment">
+                                    Payment List
+                                </NavDropdown.Item>
+                                <NavDropdown.Item href="/admin/addpayment">Add Payment</NavDropdown.Item>
+                            </NavDropdown>
+                        </ListGroup.Item>
                     </ListGroup>
                 </Offcanvas.Body>
             </Offcanvas>
