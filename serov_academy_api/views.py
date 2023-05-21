@@ -9,6 +9,7 @@ from account_api.renderers import UserRenderers
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.parsers import MultiPartParser, FormParser
 from .pagination import MyPagination
+from django.db.models import Q
 from rest_framework import filters
 
 
@@ -236,10 +237,43 @@ class StudentPaymentList(APIView):
         return paginator.get_paginated_response(serializer.data)
 
     def post(self, request, format=None):
-        serializer = StudentPaymentPostSerializers(data=request.data)
+        student_id = request.data.get('student_id')
+        section_id = request.data.get('section_id')
+        payment_month = request.data.get('payment_month')
+        payment_year = request.data.get('payment_year')
+        payment_fee = request.data.get('payment_fee')
+        payment_date = request.data.get('payment_date')
+        
+        # Fetch the student based on student_id and section_id
+        try:
+            student = Student.objects.get(student_id=student_id, section__id=section_id)
+        except Student.DoesNotExist:
+            return Response({"error": "Student not found"}, status=status.HTTP_404_NOT_FOUND)
+        
+        # Check if an entry with the same payment month and year already exists for the student
+        existing_entry = StudentPayment.objects.filter(
+            student=student,
+            payment_month=payment_month,
+            payment_year=payment_year
+        ).exists()
+
+        if existing_entry:
+            return Response({"error": "Data already exists for the given payment month and year"}, status=status.HTTP_409_CONFLICT)
+        
+        
+        data = {
+            'student': student.id,
+            'payment_month': payment_month,
+            'payment_year': payment_year,
+            'payment_fee': payment_fee,
+            'payment_date': payment_date,
+        }
+        
+        serializer = StudentPaymentPostSerializers(data=data)
         if serializer.is_valid():
             serializer.save()
-            return Response({"msg":"Data Post Successfully"}, status=status.HTTP_201_CREATED)
+            return Response({"msg": "Data Post Successfully"}, status=status.HTTP_201_CREATED)
+        
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class StudentPaymentSearch(APIView):
