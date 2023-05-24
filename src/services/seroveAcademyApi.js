@@ -61,10 +61,22 @@ export const seroveAcademyApi = createApi({
         }
       }
     }),
+    addPayment: builder.mutation({
+      query: (data) => {
+        return {
+          url: 'student_payment/',
+          method: 'POST',
+          body: data,
+          headers: {
+            'Content-type': 'application/json'
+          }
+        }
+      }
+    }),
   }),
 })
 
-export const { useGetAllStudentQuery,useDetailStudentQuery,useAddStudentMutation,useDeleteStudentMutation, useAddSectionMutation,useGetAllSectionQuery } = seroveAcademyApi
+export const { useGetAllStudentQuery,useDetailStudentQuery,useAddStudentMutation,useDeleteStudentMutation, useAddSectionMutation,useGetAllSectionQuery,useAddPaymentMutation } = seroveAcademyApi
 
 
 // set a base url for axios

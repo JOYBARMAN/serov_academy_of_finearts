@@ -248,7 +248,7 @@ class StudentPaymentList(APIView):
         try:
             student = Student.objects.get(student_id=student_id, section__id=section_id)
         except Student.DoesNotExist:
-            return Response({"error": "Student not found"}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"error": "Student not found by this section or student id"}, status=status.HTTP_404_NOT_FOUND)
         
         # Check if an entry with the same payment month and year already exists for the student
         existing_entry = StudentPayment.objects.filter(

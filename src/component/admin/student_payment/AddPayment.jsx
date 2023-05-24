@@ -1,7 +1,6 @@
-import axios from 'axios'
 import React, { useState } from 'react'
 import { Row, Container, Col, Form, Button, Alert } from 'react-bootstrap'
-import { domain, useGetAllSectionQuery } from '../../../services/seroveAcademyApi'
+import { useAddPaymentMutation, useGetAllSectionQuery } from '../../../services/seroveAcademyApi'
 import { toast } from 'react-toastify'
 
 const AddPayment = () => {
@@ -10,34 +9,35 @@ const AddPayment = () => {
     const [section, setSection] = useState('')
     const [studentId, setStudentId] = useState('')
     const allSection = useGetAllSectionQuery()
+    const [addPayment] = useAddPaymentMutation()
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         const data = new FormData(e.currentTarget);
         const actualData = {
-            student_id: studentId,
+            student_id: data.get('student_id'),
             section_id: data.get('section_id'),
             payment_month: data.get('payment_month'),
             payment_year: data.get('payment_year'),
             payment_fee: data.get('payment_fee'),
             payment_date: data.get('payment_date')
         }
-        console.log("data", actualData)
-        axios.post(`${domain}/student_payment/`, actualData)
-            .then(res => {
-                toast.success(res.data.msg, {
-                    position: "top-right",
-                    theme: "light"
-                })
+        const res = await addPayment(actualData)
+        if (res.error) {
+            // here i got the error and fix it . error is i got 2 kind of error variable 1 is name error and other is errors 
+            setError(res.error.data.error)
+            if (res.error.data.errors){
+                setServerError(res.error.data.errors)
+            }
+        }
+        if (res.data) {
+            toast.success(res.data.msg,{
+                position:"top-right",
+                theme:"light"
             })
-            .catch(err => {
-                setServerError(err.response.data.errors)
-                setError(err.response.data.error)
-                console.log("err", err)
-            })
+        }
+       
     }
-
-
 
     return (
         <Container>
