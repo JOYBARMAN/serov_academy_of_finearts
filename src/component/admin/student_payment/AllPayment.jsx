@@ -172,7 +172,7 @@ const AllPayment = () => {
                                         <td>{payment.payment_date}</td>
                                         <td>
                                             <div className='d-flex'>
-                                                <Link to="#" className='btn btn-primary btn-sm rounded-circle'><FiEdit /></Link>
+                                                <Link to={`/admin/payment/${payment.id}/edit`} className='btn btn-primary btn-sm rounded-circle'><FiEdit /></Link>
 
                                                 <Button className='btn-danger btn-sm rounded-circle mx-2' onClick={() => { handleDelete(payment.id) }}><MdDeleteOutline /></Button>
                                             </div>

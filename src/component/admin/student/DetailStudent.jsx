@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { Container, Col, Row, Image, Button, Form, DropdownButton, Dropdown, Alert, Table, Spinner, Pagination } from 'react-bootstrap'
+import { Container, Col, Row, Image, Button, Alert, Table, Spinner, Pagination } from 'react-bootstrap'
 import { useDetailStudentQuery, domain } from '../../../services/seroveAcademyApi'
 import { MdDeleteOutline } from 'react-icons/md'
-import { BsFilter } from 'react-icons/bs'
+// import { BsFilter } from 'react-icons/bs'
 import { FiEdit } from 'react-icons/fi'
 import axios from 'axios'
 import { toast } from 'react-toastify'
@@ -163,7 +163,7 @@ const DetailStudent = () => {
                                             <td>{payment.payment_year}</td>
                                             <td>
                                                 <div className='d-flex'>
-                                                    <Link to="#" className='btn btn-primary btn-sm rounded-circle'><FiEdit /></Link>
+                                                    <Link to={`/admin/payment/${payment.id}/edit`}  className='btn btn-primary btn-sm rounded-circle'><FiEdit /></Link>
                                                     <Button className='btn-danger btn-sm rounded-circle mx-2' onClick={() => { handleDelete(payment.id) }}><MdDeleteOutline /></Button>
                                                 </div>
                                             </td>

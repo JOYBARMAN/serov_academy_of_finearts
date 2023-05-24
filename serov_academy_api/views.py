@@ -333,10 +333,26 @@ class StudentPaymentDetail(APIView):
 
     def put(self, request, pk, format=None):
         student_payment = self.get_object(pk)
+        payment_month = request.data.get('payment_month')
+        payment_year = request.data.get('payment_year')
+        payment_fee = request.data.get('payment_fee')
+        payment_date = request.data.get('payment_date')
+
+        # Check if an entry with the same payment details already exists for the student
+        existing_entry = StudentPayment.objects.filter(
+            Q(student=student_payment.student),
+            Q(payment_month=payment_month),
+            Q(payment_year=payment_year)
+        ).exclude(pk=pk).exists()
+
+        if existing_entry:
+            return Response({"error": "Data already exists for the given payment month and year"}, status=status.HTTP_409_CONFLICT)
+
         serializer = StudentPaymentPostSerializers(student_payment, data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response({"msg":"Data Successfully Updated"}, status=status.HTTP_201_CREATED)
+            return Response({"msg": "Data updated successfully"}, status=status.HTTP_200_OK)
+
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, pk, format=None):

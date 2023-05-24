@@ -1,47 +1,69 @@
-import React, { useState } from 'react'
-import { Row, Container, Col, Form, Button, Alert } from 'react-bootstrap'
-import { useAddPaymentMutation, useGetAllSectionQuery } from '../../../services/seroveAcademyApi'
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
+import { domain, useUpdatePaymentMutation } from '../../../services/seroveAcademyApi'
+import { Alert, Button, Col, Container, Form, Row } from 'react-bootstrap'
 import { toast } from 'react-toastify'
 
-const AddPayment = () => {
+const EditPayment = () => {
+    const { id } = useParams()
     const [serverError, setServerError] = useState({})
     const [error, setError] = useState('')
-    const [section, setSection] = useState('')
+    const [paymentMonth, setPaymentMonth] = useState('')
+    const [paymentYear, setPaymentYear] = useState('')
+    const [paymentFee, setPaymentFee] = useState('')
+    const [paymentDate, setPaymentDate] = useState('')
     const [studentId, setStudentId] = useState('')
-    const allSection = useGetAllSectionQuery()
-    const [addPayment] = useAddPaymentMutation()
+    const [studentName, setStudentName] = useState('')
+    const [updatePayment] = useUpdatePaymentMutation()
 
+    // handle form update
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const data = new FormData(e.currentTarget);
         const actualData = {
-            student_id: data.get('student_id'),
-            section_id: data.get('section_id'),
-            payment_month: data.get('payment_month'),
-            payment_year: data.get('payment_year'),
-            payment_fee: data.get('payment_fee'),
-            payment_date: data.get('payment_date')
+            student: studentId,
+            payment_month: paymentMonth,
+            payment_year: paymentYear,
+            payment_fee: paymentFee,
+            payment_date: paymentDate,
         }
-        const res = await addPayment(actualData)
+        const res = await updatePayment({ id, actualData })
         if (res.error) {
-            // here i got the error and fix it . error is i got 2 kind of error variable 1 is name error and other is errors 
             setError(res.error.data.error)
-            if (res.error.data.errors){
+            if (res.error.data.errors) {
                 setServerError(res.error.data.errors)
             }
         }
         if (res.data) {
-            toast.success(res.data.msg,{
-                position:"top-right",
-                theme:"light"
+            toast.success(res.data.msg, {
+                position: "top-right",
+                theme: "light"
             })
         }
-       
+
     }
 
+    // get student payment detail by payment id
+    useEffect(() => {
+        const getStudentData = async () => {
+            try {
+                const response = await axios.get(`${domain}/student_payment/${id}/`);
+                setPaymentMonth(response.data.payment_month);
+                setPaymentYear(response.data.payment_year);
+                setPaymentFee(response.data.payment_fee);
+                setPaymentDate(response.data.payment_date);
+                setStudentId(response.data.student.id)
+                setStudentName(response.data.student.name)
+                console.log("success", response.data)
+            } catch (error) {
+                setError("Something is wrong !!");
+            }
+        };
+        getStudentData();
+    }, [id])
     return (
         <Container>
-            <h2 className='my-2'>Add Student Payment</h2>
+            <h2 className='my-2'>Update Student Payment</h2>
             <hr />
             <Row className='justify-content-center my-3'>
                 <Col lg="10">
@@ -52,46 +74,14 @@ const AddPayment = () => {
                         <Row>
                             <Col lg='6'>
                                 <Form.Group className="mb-3" >
-                                    <Form.Label>Section</Form.Label>
-                                    <Form.Select name='section_id' value={section} onChange={(e) => setSection(e.target.value)} required>
-                                        {allSection?.data?.map((section, key) => <option key={key} value={section.id}>{section.section}</option>)}
-                                    </Form.Select>
-                                </Form.Group>
-                            </Col>
-                            <Col lg='6'>
-                                <Form.Group className="mb-3" >
-                                    <Form.Label>Student Id</Form.Label>
-                                    <Form.Control type="text" name='student_id' placeholder="Enter student id" value={studentId} onChange={(e) => setStudentId(e.target.value)} required />
-                                </Form.Group>
-                            </Col>
-                            {/* <Col lg='12'>
-                                <Form.Group className="mb-3" >
                                     <Form.Label>Student</Form.Label>
-                                    <Form.Select name="student" disabled={!data || data.length === 0}>
-                                        {data?.length > 0 ? (
-                                            data.map((student, key) => (
-                                                <option key={key} value={student.id}>
-                                                    {student.name} / Section: {student.section.section}
-                                                </option>
-                                            ))
-                                        ) : ""}
-                                    </Form.Select>
-                                    {data?.length === 0 ?
-                                        <Form.Text style={{ "color": "red", "fontSize": 12, "paddingLeft": 10 }}>
-                                            No Data is Available For This Section
-                                        </Form.Text>
-                                        : ""}
-                                    {serverError.student ?
-                                        <Form.Text style={{ "color": "red", "fontSize": 12, "paddingLeft": 10 }}>
-                                            *{serverError.student}
-                                        </Form.Text>
-                                        : ""}
+                                    <Form.Control type="text" value={studentName} disabled />
                                 </Form.Group>
-                            </Col> */}
+                            </Col>
                             <Col lg='6'>
                                 <Form.Group className="mb-3" >
                                     <Form.Label>Payment Month</Form.Label>
-                                    <Form.Select name='payment_month' >
+                                    <Form.Select value={paymentMonth} onChange={(e) => setPaymentMonth(e.target.value)} name='payment_month'>
                                         <option>Select</option>
                                         <option value="january">january</option>
                                         <option value="february">february</option>
@@ -116,7 +106,7 @@ const AddPayment = () => {
                             <Col lg='6'>
                                 <Form.Group className="mb-3" >
                                     <Form.Label>Payment Year</Form.Label>
-                                    <Form.Control type="text" name='payment_year' placeholder="Enter year" />
+                                    <Form.Control type="text" name='payment_year' placeholder="Enter year" value={paymentYear} onChange={(e) => setPaymentYear(e.target.value)} />
                                     {serverError.payment_year ?
                                         <Form.Text style={{ "color": "red", "fontSize": 12, "paddingLeft": 10 }}>
                                             {serverError.payment_year}
@@ -127,7 +117,7 @@ const AddPayment = () => {
                             <Col lg='6'>
                                 <Form.Group className="mb-3" >
                                     <Form.Label>Payment Fee</Form.Label>
-                                    <Form.Control type="text" name='payment_fee' placeholder="Enter amount of fee" />
+                                    <Form.Control type="text" name='payment_fee' placeholder="Enter amount of fee" value={paymentFee} onChange={(e) => setPaymentFee(e.target.value)} />
                                     {serverError.payment_fee ?
                                         <Form.Text style={{ "color": "red", "fontSize": 12, "paddingLeft": 10 }}>
                                             {serverError.payment_fee}
@@ -139,7 +129,7 @@ const AddPayment = () => {
                             <Col lg='6'>
                                 <Form.Group className="mb-3" >
                                     <Form.Label>Payment Date</Form.Label>
-                                    <Form.Control type="date" name='payment_date' />
+                                    <Form.Control type="date" name='payment_date' value={paymentDate} onChange={(e) => setPaymentDate(e.target.value)} />
                                     {serverError.payment_date ?
                                         <Form.Text style={{ "color": "red", "fontSize": 12, "paddingLeft": 10 }}>
                                             {serverError.payment_date}
@@ -158,4 +148,4 @@ const AddPayment = () => {
     )
 }
 
-export default AddPayment
+export default EditPayment

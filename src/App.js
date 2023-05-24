@@ -24,6 +24,7 @@ import DetailStudent from './component/admin/student/DetailStudent';
 import EditStudent from './component/admin/student/EditStudent';
 import AllPayment from './component/admin/student_payment/AllPayment';
 import AddPayment  from './component/admin/student_payment/AddPayment';
+import EditPayment from './component/admin/student_payment/EditPayment';
 
 function App() {
   const { access_token } = useSelector(state => state.auth)
@@ -51,6 +52,7 @@ function App() {
               <Route path="addsection" element={<AddSection />} />
               <Route path="allpayment" element={<AllPayment />} />
               <Route path="addpayment" element={<AddPayment />} />
+              <Route path="payment/:id/edit" element={<EditPayment />} />
             </Route>
             <Route path="*" element={<Notfound />} />
           </Route>
