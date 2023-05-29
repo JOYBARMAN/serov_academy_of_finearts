@@ -46,7 +46,7 @@ const SideBar = () => {
                         </ListGroup.Item>
                         <ListGroup.Item className='' >
                             <NavDropdown title="Trainer" id="basic-nav-dropdown">
-                                <NavDropdown.Item href="#">Trainer List</NavDropdown.Item>
+                                <NavDropdown.Item href="/admin/alltrainer">Trainer List</NavDropdown.Item>
                                 <NavDropdown.Item href="/admin/addtrainer">
                                     Add Trainer
                                 </NavDropdown.Item>

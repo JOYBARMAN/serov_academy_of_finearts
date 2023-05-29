@@ -62,10 +62,14 @@ class CarouselDetail(APIView):
 class TrainerList(APIView):
     parser_classes = (MultiPartParser, FormParser)
     renderer_classes = [UserRenderers]
+    pagination_class = MyPagination
+
     def get(self, request, format=None):
         trainer = Trainer.objects.all()
-        serializer = TrainerSerializers(trainer, many=True)
-        return Response(serializer.data,status=status.HTTP_200_OK)
+        paginator = self.pagination_class()
+        result_page = paginator.paginate_queryset(trainer, request)
+        serializer = TrainerSerializers(result_page, many=True)
+        return paginator.get_paginated_response(serializer.data)
 
     def post(self, request, format=None):
         serializer = TrainerSerializers(data=request.data)
@@ -73,6 +77,17 @@ class TrainerList(APIView):
             serializer.save()
             return Response({"msg":"Data Post Successfully"}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+class TrainerSearch(APIView):
+    renderer_classes = [UserRenderers]
+    pagination_class = MyPagination
+    def get(self, request):
+        search_query = request.query_params.get('search', '')
+        students = Trainer.objects.filter(name__icontains=search_query)
+        paginator = self.pagination_class()
+        result_page = paginator.paginate_queryset(students, request)
+        serializer = TrainerSerializers(result_page, many=True)
+        return paginator.get_paginated_response(serializer.data)
 
 class TrainerDetail(APIView):
     renderer_classes = [UserRenderers]
