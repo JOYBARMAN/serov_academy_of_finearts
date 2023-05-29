@@ -60,6 +60,7 @@ class CarouselDetail(APIView):
 # Api view for trainer start
 
 class TrainerList(APIView):
+    parser_classes = (MultiPartParser, FormParser)
     renderer_classes = [UserRenderers]
     def get(self, request, format=None):
         trainer = Trainer.objects.all()

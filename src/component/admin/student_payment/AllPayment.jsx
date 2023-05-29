@@ -151,6 +151,7 @@ const AllPayment = () => {
                                     <th>Payment Month</th>
                                     <th>Payment Year</th>
                                     <th>Payment Fee</th>
+                                    <th>Payment Due</th>
                                     <th>Payment Date</th>
                                     <th>Action</th>
                                 </tr>
@@ -169,6 +170,7 @@ const AllPayment = () => {
                                         <td className='text-primary fw-bold'>{payment.payment_month}</td>
                                         <td>{payment.payment_year}</td>
                                         <td>{payment.payment_fee}</td>
+                                        <td>{payment.payment_due}</td>
                                         <td>{payment.payment_date}</td>
                                         <td>
                                             <div className='d-flex'>

@@ -93,6 +93,7 @@ class StudentPayment(models.Model):
     payment_month = models.CharField(max_length=15,choices=MONTH_CHOISE)
     payment_year =models.CharField(max_length=15)
     payment_fee = models.CharField(max_length=100)
+    payment_due = models.CharField(max_length=5,default="00")
     payment_date = models.DateField()
     created_at = models.DateTimeField(auto_now_add=True)
     

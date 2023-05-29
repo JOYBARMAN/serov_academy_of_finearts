@@ -32,6 +32,7 @@ const AddStudent = () => {
             }
         })
             .then(res => {
+                setServerError({})
                 toast.success(res.data.msg, {
                     position: "top-right",
                     theme: "light"
