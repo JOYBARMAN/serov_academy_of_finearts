@@ -121,7 +121,7 @@ const AllPayment = () => {
     return (
         <>
             <Container>
-                <h2 className='my-2'>All Student Payment List</h2>
+                <h2 className='mt-1 text-center'>Student Payment List</h2>
                 <hr />
                 <Row className='justify-content-center'>
                     <Col lg="10" >
@@ -166,7 +166,7 @@ const AllPayment = () => {
                                     : ""}
                                 {data?.map((payment, key) =>
                                     <tr key={key}>
-                                        <td><Link to="#">{payment.student.name}</Link></td>
+                                        <td><Link to={`/admin/student/${payment.student.id}`}>{payment.student.name}</Link></td>
                                         <td className='text-primary fw-bold'>{payment.payment_month}</td>
                                         <td>{payment.payment_year}</td>
                                         <td>{payment.payment_fee}</td>

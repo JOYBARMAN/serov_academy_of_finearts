@@ -2,7 +2,7 @@ import React from 'react'
 import { Button, Card, Col, Container, Row, Image } from 'react-bootstrap'
 import { FiHeart, FiUser } from 'react-icons/fi'
 const CourseList = () => {
-  return (
+return (
     <Container className='my-5'>
     <Row>
         <Col lg="4" md="6" className='my-3'>
@@ -10,7 +10,7 @@ const CourseList = () => {
                 <Card.Img variant="top" src="https://bootstrapmade.com/demo/templates/Mentor/assets/img/course-1.jpg" />
                 <Container className='d-flex justify-content-between mt-3'>
                     <Button variant="success" size='sm' disabled>Go somewhere</Button>
-                    <h5>Tk. 350 </h5>
+                    <h5>Fee. 350 </h5>
                 </Container>
                 <Card.Body>
                     <Card.Title>Search Engine Optimization</Card.Title>
@@ -43,7 +43,7 @@ const CourseList = () => {
                 <Card.Img variant="top" src="https://bootstrapmade.com/demo/templates/Mentor/assets/img/course-1.jpg" />
                 <Container className='d-flex justify-content-between mt-3'>
                     <Button variant="success" size='sm' disabled>Go somewhere</Button>
-                    <h5>Tk. 350 </h5>
+                    <h5>Fee. 350 </h5>
                 </Container>
                 <Card.Body>
                     <Card.Title>Search Engine Optimization</Card.Title>
@@ -76,7 +76,7 @@ const CourseList = () => {
                 <Card.Img variant="top" src="https://res.cloudinary.com/fleetnation/image/private/c_fit,w_1120/g_south,l_text:style_gothic2:%C2%A9%20Gennadiy,o_20,y_10/g_center,l_watermark4,o_25,y_50/v1496681278/jgjuawkqp0w9qhgupbgm.jpg" />
                 <Container className='d-flex justify-content-between mt-3'>
                     <Button variant="success" size='sm' disabled>Go somewhere</Button>
-                    <h5>Tk. 350 </h5>
+                    <h5>Fee. 350 </h5>
                 </Container>
                 <Card.Body>
                     <Card.Title>Search Engine Optimization</Card.Title>

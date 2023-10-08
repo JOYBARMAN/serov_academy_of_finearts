@@ -8,4 +8,4 @@ djangorestframework-simplejwt==5.2.2
 PyJWT==2.6.0
 pytz==2022.7
 sqlparse==0.4.3
-tzdata==2022.7
+

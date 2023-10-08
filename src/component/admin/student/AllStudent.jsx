@@ -120,7 +120,7 @@ const AllStudent = () => {
     return (
         <>
             <Container>
-                <h2 className='my-2'>Student List</h2>
+                <h2 className='mt-1 text-center'>Student List</h2>
                 <hr />
                 <Row className='justify-content-center'>
                     <Col lg="10" >
