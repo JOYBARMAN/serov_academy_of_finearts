@@ -105,7 +105,7 @@ const AllTrainer = () => {
     return (
         <>
             <Container>
-                <h2 className='my-2'>Trainer List</h2>
+                <h2 className='mt-1 text-center'>Trainer List</h2>
                 <hr />
                 <Row className='justify-content-center'>
                     <Col lg="10" >

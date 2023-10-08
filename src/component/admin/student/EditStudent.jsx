@@ -83,7 +83,7 @@ const EditStudent = () => {
     }
     return (
         <Container>
-            <h2 className='my-2'>Update Student </h2>
+            <h2 className='mt-1 text-center'>Update Student </h2>
             <hr />
             <Row className='justify-content-center my-3'>
                 <Col lg="10">

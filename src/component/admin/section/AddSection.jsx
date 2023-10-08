@@ -27,7 +27,7 @@ const AddSection = () => {
     return (
         <>
             <Container>
-                <h2 className='my-2'>Add Section</h2>
+                <h2 className='mt-1 text-center'>Add Section</h2>
                 <hr />
                 <Row className='justify-content-center my-3'>
                     <Col lg="10">

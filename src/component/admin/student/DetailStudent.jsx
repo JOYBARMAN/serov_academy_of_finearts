@@ -79,7 +79,7 @@ const DetailStudent = () => {
             <Container>
                 {/* student detail section  start*/}
 
-                <h2 className='my-2'>Student Detail Page</h2>
+                <h2 className='mt-1 text-center'>Student Detail Page</h2>
                 <hr />
                 <Row className='justify-content-center my-2'>
                     <div className='d-flex justify-content-end'>
@@ -111,7 +111,7 @@ const DetailStudent = () => {
                 {/* student detail section end  */}
 
                 {/* student payment section start */}
-                <h2 className='mt-5 mb-2'>Payment Information</h2>
+                <h2 className='mt-5 mb-2 text-center'>Payment Information</h2>
                 <hr />
                 <Row className='justify-content-center'>
                     <Col lg="10" >
