@@ -55,7 +55,7 @@ const AdminSection = () => {
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
-              <Dropdown.Item as={Link} to="/admin/allstudent">
+              <Dropdown.Item as={Link} to="/admin/allsection">
                 Section List
               </Dropdown.Item>
               <Dropdown.Item as={Link} to="/admin/addsection">

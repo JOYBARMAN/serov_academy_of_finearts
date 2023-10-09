@@ -1,12 +1,13 @@
 from .serializers import *
 from .models import *
+from account_api.models import User
 from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
 from rest_framework import status
 from account_api.renderers import UserRenderers
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.parsers import MultiPartParser, FormParser
 from .pagination import MyPagination
 from django.db.models import Q
@@ -646,3 +647,24 @@ class ContactDetail(APIView):
         return Response({"msg":"Data Successfully Deleted"},status=status.HTTP_204_NO_CONTENT)
     
 # Api view for contact end
+
+# Api view for admin dashboard
+class AdminDashboardView(APIView):
+    # permission_classes=[IsAuthenticated]
+    def get(self, request, format=None):
+        total_users = User.objects.all().count()
+        total_students = Student.objects.all().count()
+        total_sections = StudentSection.objects.all().count()
+        total_trainers = Trainer.objects.all().count()
+        total_courses = Course.objects.all().count()
+
+        dashboard_data = {
+            "total_users":total_users,
+            "total_students":total_students,
+            "total_sections":total_sections,
+            "total_trainers":total_trainers,
+            "total_courses":total_courses,
+        }
+
+        serializer = AdminDashboardSerializers(dashboard_data)
+        return Response(serializer.data,status=status.HTTP_200_OK)

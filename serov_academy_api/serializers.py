@@ -68,3 +68,12 @@ class ContactSerializers(serializers.ModelSerializer):
     class Meta:
         model = Contact
         fields = '__all__'
+
+class AdminDashboardSerializers(serializers.Serializer):
+    total_users = serializers.IntegerField(default=0)
+    total_students = serializers.IntegerField(default=0)
+    total_trainers = serializers.IntegerField(default=0)
+    total_courses = serializers.IntegerField(default=0)
+
+    class Meta:
+        fields = ['total_users','total_students','total_trainers','total_courses']

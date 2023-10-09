@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import CarouselList,CarouselDetail,TrainerList,TrainerSearch,TrainerDetail,StudentSectionList,StudentSectionDetail,StudentList,StudentSearch,StudentFilterBySection,StudentDetail,StudentPaymentList,StudentPaymentSearch,StudentPaymentFilterBySection,StudentPaymentFilterByStudent,StudentPaymentDetail,CourseList,CourseDetail,CourseRatingList,CourseRatingDetail,ArtProductList,ArtProductDetail,ArtProductRatingList,ArtProductRatingDetail,BlogList,BlogDetail,ContactList,ContactDetail
+from .views import CarouselList,CarouselDetail,TrainerList,TrainerSearch,TrainerDetail,StudentSectionList,StudentSectionDetail,StudentList,StudentSearch,StudentFilterBySection,StudentDetail,StudentPaymentList,StudentPaymentSearch,StudentPaymentFilterBySection,StudentPaymentFilterByStudent,StudentPaymentDetail,CourseList,CourseDetail,CourseRatingList,CourseRatingDetail,ArtProductList,ArtProductDetail,ArtProductRatingList,ArtProductRatingDetail,BlogList,BlogDetail,ContactList,ContactDetail,AdminDashboardView
 
 urlpatterns = [
     path('carousel/',CarouselList.as_view()),
@@ -30,4 +30,5 @@ urlpatterns = [
     path('blog/<int:pk>/',BlogDetail.as_view()),
     path('contact/',ContactList.as_view()),
     path('contact/<int:pk>/',ContactDetail.as_view()),
+    path('admin-dashboard/',AdminDashboardView.as_view()),
 ]

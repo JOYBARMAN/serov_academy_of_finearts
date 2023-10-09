@@ -19,6 +19,7 @@ import About from './component/about/About';
 import Product from './component/product/Product';
 import Contact from './component/contact/Contact';
 import AddSection from './component/admin/section/AddSection';
+import AllSection from './component/admin/section/AllSection';
 import AllStudent from './component/admin/student/AllStudent';
 import DetailStudent from './component/admin/student/DetailStudent';
 import EditStudent from './component/admin/student/EditStudent';
@@ -52,6 +53,7 @@ function App() {
               <Route path="student/:id" element={<DetailStudent />} />
               <Route path="student/:id/edit" element={<EditStudent />} />
               <Route path="addsection" element={<AddSection />} />
+              <Route path="allsection" element={<AllSection />} />
               <Route path="allpayment" element={<AllPayment />} />
               <Route path="addpayment" element={<AddPayment />} />
               <Route path="payment/:id/edit" element={<EditPayment />} />
