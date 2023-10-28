@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import { Form, Button,Alert } from 'react-bootstrap'
+import { Form, Button, Alert } from 'react-bootstrap'
 import { useDispatch } from 'react-redux'
 import { useLoginUserMutation } from '../../services/userAuthApi'
 import { useNavigate } from 'react-router-dom'
 import { setUserToken } from '../../features/authSlice'
 import { storeToken, getToken } from '../../services/localStoregService'
+import { RiEyeFill, RiEyeCloseFill } from 'react-icons/ri'
+import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai'
 const Login = () => {
     const [serverError, setServerError] = useState({})
+    const [showPassword, setShowPassword] = useState(false)
     const dispatch = useDispatch()
     const [loginUser] = useLoginUserMutation()
     const navigate = useNavigate();
@@ -49,12 +52,10 @@ const Login = () => {
 
             <Form.Group className="mb-3">
                 <Form.Label>Password</Form.Label>
-                <Form.Control type="password" name='password' placeholder="Password" />
-                {serverError.password ?
-                    <Form.Text style={{ "color": "red", "fontSize": 12, "paddingLeft": 10 }}>
-                        {serverError.password}
-                    </Form.Text>
-                    : ""}
+                <div className="d-flex">
+                    <Form.Control type={showPassword ? 'text' : 'password'} name='password' placeholder="Password" />
+                    <i style={{ "marginLeft": "-30px", "marginTop": "5px", "cursor": "pointer" }} onClick={() => setShowPassword(!showPassword)}>{showPassword ? <AiOutlineEye /> : <AiOutlineEyeInvisible />}</i>
+                </div>
             </Form.Group>
 
             <div className='d-flex justify-content-between mb-3'>
@@ -63,7 +64,7 @@ const Login = () => {
                 </Button>
                 <a href="/passwordresetemail" className='mt-2'>Forgot Password</a>
             </div>
-            {serverError.non_field_errors? <Alert variant='danger'>{serverError.non_field_errors}</Alert> : ''}
+            {serverError.non_field_errors ? <Alert variant='danger'>{serverError.non_field_errors}</Alert> : ''}
         </Form>
     )
 }
