@@ -2,7 +2,8 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
     email: "",
-    name: ""
+    name: "",
+    is_admin: false
 }
 
 export const userSlice = createSlice({
@@ -12,10 +13,12 @@ export const userSlice = createSlice({
         setUserInfo: (state, action) => {
             state.email = action.payload.email
             state.name = action.payload.name
+            state.is_admin = action.payload.is_admin
         },
         unSetUserInfo: (state, action) => {
             state.email = action.payload.email
             state.name = action.payload.name
+            state.is_admin = action.payload.is_admin
         },
     },
 })
