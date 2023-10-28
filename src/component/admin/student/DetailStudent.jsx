@@ -3,7 +3,6 @@ import { useParams, Link } from 'react-router-dom'
 import { Container, Col, Row, Image, Button, Alert, Table, Spinner, Pagination } from 'react-bootstrap'
 import { useDetailStudentQuery, domain } from '../../../services/seroveAcademyApi'
 import { MdDeleteOutline } from 'react-icons/md'
-// import { BsFilter } from 'react-icons/bs'
 import { FiEdit } from 'react-icons/fi'
 import axios from 'axios'
 import { toast } from 'react-toastify'
@@ -12,13 +11,10 @@ const DetailStudent = () => {
     const { data } = useDetailStudentQuery(id)
     const [paymentRes, setPaymentRes] = useState([])
     const [paymentData, setPaymentData] = useState([])
-    // const [studentData, setStudentData] = useState([])
-    // const [data, setData] = useState([])
-    // const [searchQuery, setSearchQuery] = useState('')
     const [isLoading, setIsLoading] = useState(true)
     const [error, setError] = useState('')
 
-    // Delete a student payment data 
+    // Delete a student payment data
     const handleDelete = (id) => {
         axios.delete(`${domain}/student_payment/${id}/`)
             .then(response => {
@@ -82,13 +78,13 @@ const DetailStudent = () => {
                 <h2 className='mt-1 text-center'>Student Detail Page</h2>
                 <hr />
                 <Row className='justify-content-center my-2'>
-                    <div className='d-flex justify-content-end'>
+                    <div className='d-flex justify-content-center justify-content-lg-end'>
                         <Link to={`/admin/student/${id}/edit`} className='btn btn-primary btn-sm mx-2'>Edit</Link>
                         <Button className='btn btn-danger btn-sm'>Delete</Button>
                     </div>
-                    <Col lg="8">
+                    <Col lg="8" className='mt-3'>
                         <Row className=' text-lg-start text-center'>
-                            <Col md={4}>
+                            <Col md={4} className='my-2'>
                                 <Image src={`http://localhost:8000${data?.photo}`} height={150} width={150} />
                             </Col>
                             <Col md={4}>
@@ -115,20 +111,6 @@ const DetailStudent = () => {
                 <hr />
                 <Row className='justify-content-center'>
                     <Col lg="10" >
-                        {/* <div className='d-flex justify-content-between'>
-                            <Form className=''>
-                                <Form.Group className="my-3 d-flex">
-                                    <Form.Label className='mt-2 mx-1'>Search:</Form.Label>
-                                    <Form.Control className='' type="text" placeholder="Search Name" value={searchQuery} onChange={handleSearchQueryChange} />
-                                </Form.Group>
-                            </Form>
-                            <DropdownButton title={<BsFilter />} className='mt-3 me-3'>
-                                {sectionData?.data?.map((section, key) =>
-                                    <Dropdown.Item key={key} onClick={() => { handleFilter(section.id) }}>{section.section}</Dropdown.Item>
-                                )}
-
-                            </DropdownButton>
-                        </div> */}
 
                         {error ?
                             <Alert variant="danger" className='my-2'>Something is wrong !</Alert>
