@@ -5,7 +5,6 @@ import { useLoginUserMutation } from '../../services/userAuthApi'
 import { useNavigate } from 'react-router-dom'
 import { setUserToken } from '../../features/authSlice'
 import { storeToken, getToken } from '../../services/localStoregService'
-import { RiEyeFill, RiEyeCloseFill } from 'react-icons/ri'
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai'
 const Login = () => {
     const [serverError, setServerError] = useState({})
