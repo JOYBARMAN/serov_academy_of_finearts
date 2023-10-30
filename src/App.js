@@ -46,7 +46,7 @@ function App() {
             <Route path="api/user/passwordreset/:id/:token" element={<ResetPassword />} />
             <Route path="changepassword" element={!access_token ? <LoginReg /> : <ChangePassword />} />
             <Route path='dashboard' element={access_token ? <Dashboard /> : <LoginReg />} />
-            <Route path="admin" element={<AdminLayout />}>
+            <Route path="admin" element={access_token ? <AdminLayout /> : <LoginReg />}>
               <Route index element={<Admin />} />
               <Route path="addstudent" element={<AddStudent />} />
               <Route path="allstudent" element={<AllStudent />} />

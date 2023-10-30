@@ -16,13 +16,13 @@ const AdminSection = () => {
   };
 
   return (
-    <div className="my-2">
+    <div className="my-2 shadow-sm">
       <ListGroup activeKey={activeLink}>
         <ListGroup.Item
           action
           as={Link}
           to="/admin"
-          onClick={() => handleActiveKeyChange("dmin")}
+          onClick={() => handleActiveKeyChange("admin")}
         >
           <span className="ms-3">Admin Home</span>
         </ListGroup.Item>
