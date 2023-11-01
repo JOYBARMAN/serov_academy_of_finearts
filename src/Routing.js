@@ -1,5 +1,4 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import 'react-toastify/dist/ReactToastify.css';
 import { useSelector } from 'react-redux';
 import Home from './component/home/Home';
 import Layout from './component/Layout';
@@ -26,9 +25,11 @@ import AddPayment from './component/admin/student_payment/AddPayment';
 import EditPayment from './component/admin/student_payment/EditPayment';
 import AddTrainer from './component/admin/trainer/AddTrainer';
 import AllTrainer from './component/admin/trainer/AllTrainer';
+import { getUserIsAdmin } from "./services/localStoregService";
 
 const Routing = () => {
     const { access_token } = useSelector(state => state.auth)
+    const is_admin = getUserIsAdmin()
     return (
         <BrowserRouter>
             <Routes>
@@ -43,7 +44,7 @@ const Routing = () => {
                     <Route path="api/user/passwordreset/:id/:token" element={<ResetPassword />} />
                     <Route path="changepassword" element={!access_token ? <LoginReg /> : <ChangePassword />} />
                     <Route path='dashboard' element={access_token ? <Dashboard /> : <LoginReg />} />
-                    <Route path="admin" element={access_token ? <AdminLayout /> : <LoginReg />}>
+                    <Route path="admin" element={access_token && is_admin ? <AdminLayout /> : <Home />}>
                         <Route index element={<Admin />} />
                         <Route path="addstudent" element={<AddStudent />} />
                         <Route path="allstudent" element={<AllStudent />} />

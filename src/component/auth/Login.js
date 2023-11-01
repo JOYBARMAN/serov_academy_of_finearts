@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux'
 import { useLoginUserMutation } from '../../services/userAuthApi'
 import { useNavigate } from 'react-router-dom'
 import { setUserToken } from '../../features/authSlice'
-import { storeToken, getToken } from '../../services/localStoregService'
+import { storeToken, getToken, storeUserIsAdmin } from '../../services/localStoregService'
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai'
 const Login = () => {
     const [serverError, setServerError] = useState({})
@@ -26,6 +26,7 @@ const Login = () => {
         }
         if (res.data) {
             storeToken(res.data.token)
+            storeUserIsAdmin(res.data.is_admin)
             let { access_token } = getToken()
             dispatch(setUserToken({ access_token: access_token }))
             navigate('/')

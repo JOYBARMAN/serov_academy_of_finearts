@@ -2,7 +2,7 @@ import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import { FaUserAlt } from "react-icons/fa";
-import { getToken, removeToken } from '../services/localStoregService';
+import { getToken, getUserIsAdmin, removeToken, removeUserIsAdmin } from '../services/localStoregService';
 import { unSetUserInfo } from '../features/userSlice';
 import { useDispatch } from 'react-redux';
 import { unSetUserToken } from '../features/authSlice';
@@ -12,11 +12,13 @@ const NavBar = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const { access_token } = getToken()
+    const is_admin = getUserIsAdmin()
 
     const handleLogout = () => {
         dispatch(unSetUserInfo({ email: "", name: "" }))
         dispatch(unSetUserToken({ access_token: null }))
         removeToken()
+        removeUserIsAdmin()
         navigate('/login')
     }
 
@@ -40,7 +42,11 @@ const NavBar = () => {
                             <Link to="/product" className='nav-link text-white '>Product</Link>
                             <Link to="/blog" className='nav-link text-white '>Blog</Link>
                             <Link to="/contact" className='nav-link text-white '>Contact</Link>
-                            <Link to="/admin" className='nav-link text-white '>Admin</Link>
+                            {is_admin ?
+                                <Link to="/admin" className='nav-link text-white '>Admin</Link>
+                                :
+                                ""
+                            }
                         </Nav>
                         {access_token ?
                             <Nav>

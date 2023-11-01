@@ -12,11 +12,8 @@ const Dashboard = () => {
     const dispatch = useDispatch()
     const { access_token } = getToken()
     const { data, isSuccess } = useGetLoggedUserQuery(access_token)
-    console.log("user data ", data?.is_admin)
-    // console.log("user============ data ",userData?.is_admin)
+    const [userData, setUserData] = useState({ email: "", name: "", is_admin: "" })
 
-    const [userData, setUserData] = useState({ email: "", name: "", is_admin: false })
-    console.log("user==============================================", userData)
     useEffect(() => {
         if (data && isSuccess) {
             setUserData({ email: data.email, name: data.name, is_admin: data.is_admin })

@@ -17,3 +17,20 @@ export const removeToken = () => {
     localStorage.removeItem('access_token')
     localStorage.removeItem('refresh_token')
 }
+
+
+export const storeUserIsAdmin = (value) => {
+    if (value) {
+        localStorage.setItem('is_admin', value)
+    }
+}
+
+export const getUserIsAdmin = () => {
+    let is_admin = localStorage.getItem('is_admin')
+    return is_admin
+}
+
+
+export const removeUserIsAdmin = () => {
+    localStorage.removeItem('is_admin')
+}
